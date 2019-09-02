@@ -30,6 +30,10 @@ paths:
         - environment
       parameters:
         - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/countParam'
+        - $ref: '#/components/parameters/pageNumberParam'
+        - $ref: '#/components/parameters/pageSizeParam'
+        - $ref: '#/components/parameters/sortParam'
     post:
       summary: Create an environment.
       responses:
@@ -45,7 +49,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Environment'
       tags:
-        - environemnt
+        - environment
       operationId: createEnvironment
       requestBody:
         content:
