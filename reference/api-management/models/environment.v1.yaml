@@ -1,0 +1,22 @@
+title: Environment
+type: object
+properties:
+  id:
+    type: string
+    readOnly: true
+  name:
+    type: string
+  metadata:
+    $ref: ./auditmetadata.v1.yaml
+  attributes:
+    type: object
+  description:
+    type: string
+  icon:
+    type: string
+  flowVariables:
+    $ref: ./environmentdictionary.v1.yaml
+  variables:
+    $ref: ./environmentdictionary.v1.yaml
+required:
+  - name

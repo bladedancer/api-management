@@ -1,0 +1,106 @@
+openapi: 3.0.0
+info:
+  title: API Management
+  version: '1.0'
+  contact:
+    name: Axway Support
+    email: support@axway.com
+  license:
+    name: Copyright Axway 2019. All rights reserved.
+  description: APIs for API Management in Amplify Central.
+servers:
+  - url: 'https://apicentral.axway.com/api/mgmt/v1'
+    description: API Central
+paths:
+  /environments:
+    get:
+      summary: Get all environments.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: ./models/environment.v1.yaml
+      description: Get all environments.
+      operationId: getEnvironments
+      tags:
+        - environment
+    post:
+      summary: Create an environment.
+      responses:
+        '201':
+          description: Created
+          headers:
+            location:
+              schema:
+                type: string
+              description: The location of the created environment.
+          content:
+            application/json:
+              schema:
+                $ref: ./models/environment.v1.yaml
+      description: Create an environment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ./models/environment.v1.yaml
+      operationId: createEnvironment
+      tags:
+        - environemnt
+  '/environments/{environmentId}':
+    parameters:
+      - name: environmentId
+        in: path
+        required: true
+        type: string
+    get:
+      summary: Get an environment.
+      tags:
+        - environment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ./models/environment.v1.yaml
+              examples: {}
+        '404':
+          description: Not Found
+      description: Get an environment.
+      operationId: getEnvironment
+    put:
+      summary: Update an environment.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: ./models/environment.v1.yaml
+        '404':
+          description: Not Found
+      description: Update an environment.
+      operationId: updateEnvironment
+      tags:
+        - environment
+    delete:
+      summary: Delete an environment.
+      responses:
+        '204':
+          description: No Content
+      tags:
+        - environment
+      operationId: deleteEnvironment
+      description: Delete an environment.
+components:
+  schemas: {}
+  securitySchemes:
+    scheme_0:
+      type: http
+      scheme: Bearer
+      description: ''
