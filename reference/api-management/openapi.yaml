@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.0.2
 info:
   title: API Management
   version: '1.0'
@@ -23,11 +23,13 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: ./models/environment.v1.yaml
+                  $ref: '#/components/schemas/Environment'
       description: Get all environments.
       operationId: getEnvironments
       tags:
         - environment
+      parameters:
+        - $ref: '#/components/parameters/offsetParam'
     post:
       summary: Create an environment.
       responses:
@@ -41,22 +43,84 @@ paths:
           content:
             application/json:
               schema:
-                $ref: ./models/environment.v1.yaml
-      description: Create an environment
+                $ref: '#/components/schemas/Environment'
+      tags:
+        - environemnt
+      operationId: createEnvironment
       requestBody:
         content:
           application/json:
             schema:
-              $ref: ./models/environment.v1.yaml
-      operationId: createEnvironment
+              $ref: '#/components/schemas/Environment'
+      description: Create an environment.
+  /graphql:
+    get:
+      summary: GraphQL query endpoint.
       tags:
-        - environemnt
+        - graphql
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                  data:
+                    type: object
+      description: GraphQL query endpoint.
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: query
+          description: 'The GraphQL query. See https://graphql.org/learn/serving-over-http/#get-request.'
+          required: true
+      operationId: queryGraphqlInline
+    post:
+      summary: GraphQL query endpoint.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  errors:
+                    type: array
+                    items:
+                      type: object
+      description: GraphQL query endpoint.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                operationName:
+                  type: string
+                variables:
+                  type: object
+        description: 'The GraphQL query. See https://graphql.org/learn/serving-over-http/#post-request.'
+      operationId: queryGraphql
+      tags:
+        - graphql
   '/environments/{environmentId}':
     parameters:
       - name: environmentId
         in: path
         required: true
-        type: string
+        schema:
+          type: string
     get:
       summary: Get an environment.
       tags:
@@ -67,7 +131,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: ./models/environment.v1.yaml
+                $ref: '#/components/schemas/Environment'
               examples: {}
         '404':
           description: Not Found
@@ -81,7 +145,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: ./models/environment.v1.yaml
+                $ref: '#/components/schemas/Environment'
         '404':
           description: Not Found
       description: Update an environment.
@@ -92,15 +156,124 @@ paths:
       summary: Delete an environment.
       responses:
         '204':
-          description: No Content
+          description: No Content.
       tags:
         - environment
       operationId: deleteEnvironment
       description: Delete an environment.
 components:
-  schemas: {}
+  schemas:
+    AuditMetadata:
+      title: AuditMetadata
+      description: 'Read-only metadata for the record.'
+      properties:
+        createTimestamp:
+          type: string
+          format: date-time
+          description: The creation time.
+        createUserId:
+          type: string
+          description: Id of the user that created the entity.
+        modifyTimestamp:
+          type: string
+          format: date-time
+          description: The last modification time.
+        modifyUserId:
+          type: string
+          description: Id of the user that last modified the entity.
+      readOnly: true
+      type: object
+    Environment:
+      title: Environment
+      description: 'An environment contains API Services.'
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        name:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/AuditMetadata'
+        attributes:
+          type: object
+        description:
+          type: string
+        icon:
+          type: string
+        flowVariables:
+          $ref: '#/components/schemas/EnvironmentDictionary'
+        variables:
+          $ref: '#/components/schemas/EnvironmentDictionary'
+      required:
+        - name
+    APIService:
+      title: API Service
+      description: 'An API Service describes an API that is consumable.'
+      type: object
+      properties:
+        id:
+          type: string
+    APIServiceDefinition:
+      title: APIService
+      description: 'The details of individual releases of an API Service.'
+      type: object
+      properties:
+        id:
+          type: string
+    EnvironmentDictionary:
+      title: EnvironmentDictionary
+      description: 'Variables for use in environment substitutions.'
+      additionalProperties:
+        oneOf:
+          - type: string
+          - type: integer
+          - type: boolean
   securitySchemes:
     scheme_0:
       type: http
       scheme: Bearer
-      description: ''
+      description: 'Authenticated platform bearer token.'
+  parameters:
+    offsetParam:
+      name: offset
+      in: query
+      description: The offset index into the result set to start returning results from.
+      required: false
+      schema:
+        type: integer
+        default: 0
+    countParam:
+      name: count
+      in: query
+      description: The maximum number of entities to return.
+      required: false
+      schema:
+        type: integer
+        default: 20
+    pageNumberParam:
+      name: page
+      in: query
+      description: The offset starting page number in the result set to start returning results from, starts at 1.
+      required: false
+      schema:
+        type: integer
+        default: 1
+    pageSizeParam:
+      name: pageSize
+      in: query
+      description: The number of entities allowed in a page.
+      required: false
+      schema:
+        type: integer
+        default: 20
+    sortParam:
+      name: sort
+      in: query
+      description: The field to sort result sets by, in ASC or DESC order.
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+ption: ''

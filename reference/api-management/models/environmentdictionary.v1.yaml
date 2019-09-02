@@ -1,7 +1,0 @@
-title: EnvironmentDictionary
-type: object
-additionalProperties:
-  oneOf:
-    - type: string
-    - type: integer
-    - type: boolean
