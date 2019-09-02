@@ -169,7 +169,7 @@ components:
   schemas:
     AuditMetadata:
       title: AuditMetadata
-      description: 'Read-only metadata for the record.'
+      description: Read-only metadata for the record.
       properties:
         createTimestamp:
           type: string
@@ -189,7 +189,7 @@ components:
       type: object
     Environment:
       title: Environment
-      description: 'An environment contains API Services.'
+      description: An environment contains API Services.
       type: object
       properties:
         id:
@@ -198,9 +198,9 @@ components:
         name:
           type: string
         metadata:
-          $ref: '#/components/schemas/AuditMetadata'
+            $ref: '#/components/schemas/AuditMetadata'
         attributes:
-          type: object
+          $ref: '#/components/schemas/Attributes'
         description:
           type: string
         icon:
@@ -213,31 +213,41 @@ components:
         - name
     APIService:
       title: API Service
-      description: 'An API Service describes an API that is consumable.'
+      description: An API Service describes an API that is consumable.
       type: object
       properties:
         id:
           type: string
     APIServiceDefinition:
       title: APIService
-      description: 'The details of individual releases of an API Service.'
+      description: The details of individual releases of an API Service.
       type: object
       properties:
         id:
           type: string
     EnvironmentDictionary:
       title: EnvironmentDictionary
-      description: 'Variables for use in environment substitutions.'
+      description: Variables for use in environment substitutions.
       additionalProperties:
         oneOf:
           - type: string
           - type: integer
           - type: boolean
+    Attributes:
+      title: Attributes
+      description: Custom attributes added to objects.
+      additionalProperties:
+        oneOf:
+          - type: string
+          - type: integer
+          - type: boolean
+          - type: array
+            items: {}
   securitySchemes:
     scheme_0:
       type: http
       scheme: Bearer
-      description: 'Authenticated platform bearer token.'
+      description: Authenticated platform bearer token.
   parameters:
     offsetParam:
       name: offset
@@ -258,7 +268,7 @@ components:
     pageNumberParam:
       name: page
       in: query
-      description: The offset starting page number in the result set to start returning results from, starts at 1.
+      description: 'The offset starting page number in the result set to start returning results from, starts at 1.'
       required: false
       schema:
         type: integer
@@ -274,10 +284,9 @@ components:
     sortParam:
       name: sort
       in: query
-      description: The field to sort result sets by, in ASC or DESC order.
+      description: 'The field to sort result sets by, in ASC or DESC order.'
       required: false
       schema:
         type: array
         items:
           type: string
-
