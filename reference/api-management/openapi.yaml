@@ -223,22 +223,13 @@ components:
       properties:
         id:
           type: string
+          readOnly: true
         name:
           type: string
         icon:
           type: string
         description:
           type: string
-        environment:
-          type: object
-          properties:
-            id:
-              type: string
-            name:
-              type: string
-              readOnly: true
-          required:
-            - id
         attributes:
           $ref: '#/components/schemas/Attributes'
         metadata:
@@ -253,6 +244,10 @@ components:
           additionalProperties:
             $ref: '#/components/schemas/APIServiceDefinition'
           description: The API Service definitions in this API Service.
+        environmentId:
+          type: string
+      required:
+        - environmentId
     APIServiceDefinition:
       title: API Service Definition
       description: The details of individual releases of an API Service.
@@ -260,6 +255,7 @@ components:
       properties:
         id:
           type: string
+          readOnly: true
         tags:
           type: array
           description: List of tags
@@ -269,10 +265,6 @@ components:
           $ref: '#/components/schemas/AuditMetadata'
         attributes:
           $ref: '#/components/schemas/Attributes'
-        description:
-          type: string
-        name:
-          type: string
         endpoint:
           $ref: '#/components/schemas/APIEndpoint'
         proxy: {}
@@ -314,10 +306,13 @@ components:
       type: object
       description: An endpoint.
       properties:
-        host: 
+        host:
           type: string
         port:
           type: integer
+      required:
+        - host
+        - port
     EnvironmentDictionary:
       title: EnvironmentDictionary
       description: Variables for use in environment substitutions.
