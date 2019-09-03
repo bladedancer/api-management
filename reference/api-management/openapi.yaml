@@ -7,10 +7,10 @@ info:
     email: support@axway.com
   license:
     name: Copyright Axway 2019. All rights reserved.
-  description: APIs for API Management in Amplify Central.
+  description: API Management in Amplify Central.
 servers:
-  - url: 'https://apicentral.axway.com/api/mgmt/v1'
-    description: API Central
+  - url: 'https://apicentral.axway.com/api/mgmt/v1alpha1'
+    description: Amplify Central
 paths:
   /environments:
     get:
