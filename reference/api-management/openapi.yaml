@@ -198,7 +198,7 @@ components:
         name:
           type: string
         metadata:
-            $ref: '#/components/schemas/AuditMetadata'
+          $ref: '#/components/schemas/AuditMetadata'
         attributes:
           $ref: '#/components/schemas/Attributes'
         description:
@@ -209,6 +209,11 @@ components:
           $ref: '#/components/schemas/EnvironmentDictionary'
         variables:
           $ref: '#/components/schemas/EnvironmentDictionary'
+        tags:
+          type: array
+          description: List of tags
+          items:
+            type: string
       required:
         - name
     APIService:
@@ -218,13 +223,91 @@ components:
       properties:
         id:
           type: string
+        name:
+          type: string
+        icon:
+          type: string
+        description:
+          type: string
+        attributes:
+          $ref: '#/components/schemas/Attributes'
+        metadata:
+          $ref: '#/components/schemas/AuditMetadata'
+        tags:
+          type: array
+          description: List of tags
+          items:
+            type: string
+        definitions:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/APIServiceDefinition'
+          description: The API Service definitions in this API Service.
     APIServiceDefinition:
-      title: APIService
+      title: API Service Definition
       description: The details of individual releases of an API Service.
       type: object
       properties:
         id:
           type: string
+        tags:
+          type: array
+          description: List of tags
+          items:
+            type: string
+        metadata:
+          $ref: '#/components/schemas/AuditMetadata'
+        attributes:
+          $ref: '#/components/schemas/Attributes'
+        description:
+          type: string
+        name:
+          type: string
+        endpoint:
+          $ref: '#/components/schemas/APIEndpoint'
+        proxy: {}
+    APIEndpoint:
+      title: API Endpoint
+      description: A consumable API endpoint description.
+      type: object
+      properties:
+        api:
+          oneOf:
+            - type: array
+              items:
+                $ref: '#/components/schemas/APIDefinition'
+            - $ref: '#/components/schemas/APIDefinition'
+        selector:
+          type: object
+          properties:
+            type:
+              type: string
+            value: {}
+        endpoint:
+          oneOf:
+            - type: array
+              items:
+                $ref: '#/components/schemas/Endpoint'
+            - $ref: '#/components/schemas/Endpoint'
+    APIDefinition:
+      title: API Definition
+      description: An API definition.
+      properties:
+        type:
+          type: string
+        definition:
+          oneOf:
+            - type: object
+            - type: string
+      additionalProperties: true
+    Endpoint:
+      type: object
+      description: An endpoint.
+      properties:
+        host: 
+          type: string
+        port:
+          type: integer
     EnvironmentDictionary:
       title: EnvironmentDictionary
       description: Variables for use in environment substitutions.
