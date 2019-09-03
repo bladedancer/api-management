@@ -229,6 +229,16 @@ components:
           type: string
         description:
           type: string
+        environment:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+              readOnly: true
+          required:
+            - id
         attributes:
           $ref: '#/components/schemas/Attributes'
         metadata:
