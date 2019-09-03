@@ -165,6 +165,204 @@ paths:
         - environment
       operationId: deleteEnvironment
       description: Delete an environment.
+  /apiservices:
+    get:
+      summary: Get all API Services.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/APIService'
+      description: Get all API Services.
+      operationId: getAPIServices
+      tags:
+        - apiservice
+      parameters:
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/countParam'
+        - $ref: '#/components/parameters/pageNumberParam'
+        - $ref: '#/components/parameters/pageSizeParam'
+        - $ref: '#/components/parameters/sortParam'
+    post:
+      summary: Create an API Service.
+      responses:
+        '201':
+          description: Created
+          headers:
+            location:
+              schema:
+                type: string
+              description: The location of the created API Service.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIService'
+      tags:
+        - apiservice
+      operationId: createAPIService
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/APIService'
+      description: Create an API Service.
+  '/apiservice/{apiserviceId}':
+    parameters:
+      - name: apiserviceId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get an API Service.
+      tags:
+        - apiservice
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIService'
+              examples: {}
+        '404':
+          description: Not Found
+      description: Get an API Service.
+      operationId: getAPIService
+    put:
+      summary: Update an API Service.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIService'
+        '404':
+          description: Not Found
+      description: Update an API Service.
+      operationId: updateAPIService
+      tags:
+        - apiservice
+    delete:
+      summary: Delete an API Service.
+      responses:
+        '204':
+          description: No Content.
+      tags:
+        - apiservice
+      operationId: deleteAPIService
+      description: Delete an API Service.
+  /apiservices/{apiserviceId}/definitions:
+    parameters:
+      - name: apiserviceId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get all API Service Definitions.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/APIServiceDefinition'
+      description: Get all API Service Definitions.
+      operationId: getAPIServiceDefinitions
+      tags:
+        - apiservice
+        - apiservicedefinition
+      parameters:
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/countParam'
+        - $ref: '#/components/parameters/pageNumberParam'
+        - $ref: '#/components/parameters/pageSizeParam'
+        - $ref: '#/components/parameters/sortParam'
+    post:
+      summary: Create an API Service Definition.
+      responses:
+        '201':
+          description: Created
+          headers:
+            location:
+              schema:
+                type: string
+              description: The location of the created API Service Definition.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIServiceDefinition'
+      tags:
+        - apiservice
+        - apiservicedefinition
+      operationId: createAPIServiceDefinition
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/APIServiceDefinition'
+      description: Create an API Service Definition.
+  '/apiservice/{apiserviceId}/definitions/{definitionId}':
+    parameters:
+      - name: apiserviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: definitionId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get an API Service Definition.
+      tags:
+        - apiservice
+        - apiservicedefinition
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIServiceDefinition'
+        '404':
+          description: Not Found
+      description: Get an API Service Definition.
+      operationId: getAPIServiceDefinition
+    put:
+      summary: Update an API Service Definition.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIServiceDefinition'
+        '404':
+          description: Not Found
+      description: Update an API Service Definition.
+      operationId: updateAPIServiceDefinition
+      tags:
+        - apiservice
+        - apiservicedefinition
+    delete:
+      summary: Delete an API Service Definition.
+      responses:
+        '204':
+          description: No Content.
+      tags:
+        - apiservice
+      operationId: deleteAPIServiceDefinition
+      description: Delete an API Service Definition.
 components:
   schemas:
     AuditMetadata:
