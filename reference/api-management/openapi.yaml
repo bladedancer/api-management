@@ -376,7 +376,7 @@ paths:
         schema:
           type: string
     put:
-      summary: Publish an API Service Definition..
+      summary: Publish an API Service Definition.
       responses:
         '204':
           description: No Content
