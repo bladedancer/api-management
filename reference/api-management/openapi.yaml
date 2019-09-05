@@ -168,6 +168,8 @@ paths:
   /apiservices:
     get:
       summary: Get all API Services.
+      tags:
+        - apiservice
       responses:
         '200':
           description: OK
@@ -177,16 +179,14 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/APIService'
-      description: Get all API Services.
-      operationId: getAPIServices
-      tags:
-        - apiservice
       parameters:
         - $ref: '#/components/parameters/offsetParam'
         - $ref: '#/components/parameters/countParam'
         - $ref: '#/components/parameters/pageNumberParam'
         - $ref: '#/components/parameters/pageSizeParam'
         - $ref: '#/components/parameters/sortParam'
+      operationId: getAPIServices
+      description: Get all API Services.
     post:
       summary: Create an API Service.
       responses:
@@ -257,59 +257,6 @@ paths:
         - apiservice
       operationId: deleteAPIService
       description: Delete an API Service.
-  /apiservices/{apiserviceId}/definitions:
-    parameters:
-      - name: apiserviceId
-        in: path
-        required: true
-        schema:
-          type: string
-    get:
-      summary: Get all API Service Definitions.
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/APIServiceDefinition'
-      description: Get all API Service Definitions.
-      operationId: getAPIServiceDefinitions
-      tags:
-        - apiservice
-        - apiservicedefinition
-      parameters:
-        - $ref: '#/components/parameters/offsetParam'
-        - $ref: '#/components/parameters/countParam'
-        - $ref: '#/components/parameters/pageNumberParam'
-        - $ref: '#/components/parameters/pageSizeParam'
-        - $ref: '#/components/parameters/sortParam'
-    post:
-      summary: Create an API Service Definition.
-      responses:
-        '201':
-          description: Created
-          headers:
-            location:
-              schema:
-                type: string
-              description: The location of the created API Service Definition.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIServiceDefinition'
-      tags:
-        - apiservice
-        - apiservicedefinition
-      operationId: createAPIServiceDefinition
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/APIServiceDefinition'
-      description: Create an API Service Definition.
   '/apiservice/{apiserviceId}/definitions/{definitionId}':
     parameters:
       - name: apiserviceId
@@ -363,6 +310,83 @@ paths:
         - apiservice
       operationId: deleteAPIServiceDefinition
       description: Delete an API Service Definition.
+  '/apiservices/{apiserviceId}/definitions':
+    get:
+      summary: Get all API Service Definitions.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/APIServiceDefinition'
+      description: Get all API Service Definitions.
+      operationId: getAPIServiceDefinitions
+      tags:
+        - apiservice
+        - apiservicedefinition
+      parameters:
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/countParam'
+        - $ref: '#/components/parameters/pageNumberParam'
+        - $ref: '#/components/parameters/pageSizeParam'
+        - $ref: '#/components/parameters/sortParam'
+    post:
+      summary: Create an API Service Definition.
+      responses:
+        '201':
+          description: Created
+          headers:
+            location:
+              schema:
+                type: string
+              description: The location of the created API Service Definition.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIServiceDefinition'
+      tags:
+        - apiservice
+        - apiservicedefinition
+      operationId: createAPIServiceDefinition
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/APIServiceDefinition'
+      description: Create an API Service Definition.
+    parameters:
+      - name: apiserviceId
+        in: path
+        required: true
+        schema:
+          type: string
+  '/apiservice/{apiserviceId}/definitions/{definitionId}/publish':
+    parameters:
+      - name: apiserviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: definitionId
+        in: path
+        required: true
+        schema:
+          type: string
+    put:
+      summary: Publish an API Service Definition..
+      responses:
+        '204':
+          description: No Content
+        '404':
+          description: Not Found
+      description: Publish an API Service Definition.
+      operationId: publishAPIServiceDefinition
+      tags:
+        - apiservice
+        - apiservicedefinition
 components:
   schemas:
     AuditMetadata:
