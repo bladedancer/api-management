@@ -210,7 +210,7 @@ paths:
             schema:
               $ref: '#/components/schemas/APIService'
       description: Create an API Service.
-  '/apiservice/{apiserviceId}':
+  '/apiservices/{apiserviceId}':
     parameters:
       - name: apiserviceId
         in: path
@@ -257,59 +257,6 @@ paths:
         - apiservice
       operationId: deleteAPIService
       description: Delete an API Service.
-  '/apiservice/{apiserviceId}/definitions/{definitionId}':
-    parameters:
-      - name: apiserviceId
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: definitionId
-        in: path
-        required: true
-        schema:
-          type: string
-    get:
-      summary: Get an API Service Definition.
-      tags:
-        - apiservice
-        - apiservicedefinition
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIServiceDefinition'
-        '404':
-          description: Not Found
-      description: Get an API Service Definition.
-      operationId: getAPIServiceDefinition
-    put:
-      summary: Update an API Service Definition.
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIServiceDefinition'
-        '404':
-          description: Not Found
-      description: Update an API Service Definition.
-      operationId: updateAPIServiceDefinition
-      tags:
-        - apiservice
-        - apiservicedefinition
-    delete:
-      summary: Delete an API Service Definition.
-      responses:
-        '204':
-          description: No Content.
-      tags:
-        - apiservice
-      operationId: deleteAPIServiceDefinition
-      description: Delete an API Service Definition.
   '/apiservices/{apiserviceId}/definitions':
     get:
       summary: Get all API Service Definitions.
@@ -363,7 +310,60 @@ paths:
         required: true
         schema:
           type: string
-  '/apiservice/{apiserviceId}/definitions/{definitionId}/publish':
+  '/apiservices/{apiserviceId}/definitions/{definitionId}':
+    parameters:
+      - name: apiserviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: definitionId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get an API Service Definition.
+      tags:
+        - apiservice
+        - apiservicedefinition
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIServiceDefinition'
+        '404':
+          description: Not Found
+      description: Get an API Service Definition.
+      operationId: getAPIServiceDefinition
+    put:
+      summary: Update an API Service Definition.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIServiceDefinition'
+        '404':
+          description: Not Found
+      description: Update an API Service Definition.
+      operationId: updateAPIServiceDefinition
+      tags:
+        - apiservice
+        - apiservicedefinition
+    delete:
+      summary: Delete an API Service Definition.
+      responses:
+        '204':
+          description: No Content.
+      tags:
+        - apiservice
+      operationId: deleteAPIServiceDefinition
+      description: Delete an API Service Definition.
+  '/apiservices/{apiserviceId}/definitions/{definitionId}/publish':
     parameters:
       - name: apiserviceId
         in: path
