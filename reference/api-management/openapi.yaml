@@ -58,6 +58,9 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Environment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Environment'
       description: Create an environment.
   /graphql:
     get:
@@ -449,6 +452,7 @@ components:
           type: string
         icon:
           type: string
+          format: binary
         variables:
           $ref: '#/components/schemas/EnvironmentVariables'
         tags:
