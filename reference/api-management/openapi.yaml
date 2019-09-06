@@ -265,9 +265,9 @@ paths:
         - apiservice
       operationId: deleteAPIService
       description: Delete an API Service.
-  '/apiservices/{apiserviceId}/definitions':
+  '/apiservices/{apiserviceId}/instance':
     get:
-      summary: Get all API Service Definitions.
+      summary: Get all API Service Instances.
       responses:
         '200':
           description: OK
@@ -276,12 +276,12 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/APIServiceDefinition'
-      description: Get all API Service Definitions.
-      operationId: getAPIServiceDefinitions
+                  $ref: '#/components/schemas/APIServiceInstance'
+      description: Get all API Service Instances.
+      operationId: getAPIServiceInstances
       tags:
         - apiservice
-        - apiservicedefinition
+        - apiserviceinstance
       parameters:
         - $ref: '#/components/parameters/offsetParam'
         - $ref: '#/components/parameters/countParam'
@@ -289,7 +289,7 @@ paths:
         - $ref: '#/components/parameters/pageSizeParam'
         - $ref: '#/components/parameters/sortParam'
     post:
-      summary: Create an API Service Definition.
+      summary: Create an API Service Instance.
       responses:
         '201':
           description: Created
@@ -297,108 +297,108 @@ paths:
             location:
               schema:
                 type: string
-              description: The location of the created API Service Definition.
+              description: The location of the created API Service Instance.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/APIServiceDefinition'
+                $ref: '#/components/schemas/APIServiceInstance'
         '409':
           description: Conflict
       tags:
         - apiservice
-        - apiservicedefinition
-      operationId: createAPIServiceDefinition
+        - apiserviceinstance
+      operationId: createAPIServiceInstance
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/APIServiceDefinition'
-      description: Create an API Service Definition.
+              $ref: '#/components/schemas/APIServiceInstance'
+      description: Create an API Service Instance.
     parameters:
       - name: apiserviceId
         in: path
         required: true
         schema:
           type: string
-  '/apiservices/{apiserviceId}/definitions/{definitionId}':
+  '/apiservices/{apiserviceId}/instance/{instanceId}':
     parameters:
       - name: apiserviceId
         in: path
         required: true
         schema:
           type: string
-      - name: definitionId
+      - name: instanceId
         in: path
         required: true
         schema:
           type: string
     get:
-      summary: Get an API Service Definition.
+      summary: Get an API Service Instance.
       tags:
         - apiservice
-        - apiservicedefinition
+        - apiserviceinstance
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/APIServiceDefinition'
+                $ref: '#/components/schemas/APIServiceInstance'
         '404':
           description: Not Found
-      description: Get an API Service Definition.
-      operationId: getAPIServiceDefinition
+      description: Get an API Service Instance.
+      operationId: getAPIServiceInstance
     put:
-      summary: Update an API Service Definition.
+      summary: Update an API Service Instance.
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/APIServiceDefinition'
+                $ref: '#/components/schemas/APIServiceInstance'
         '404':
           description: Not Found
         '409':
           description: Conflict
-      description: Update an API Service Definition.
-      operationId: updateAPIServiceDefinition
+      description: Update an API Service Instance.
+      operationId: updateAPIServiceInstance
       tags:
         - apiservice
-        - apiservicedefinition
+        - apiserviceinstance
     delete:
-      summary: Delete an API Service Definition.
+      summary: Delete an API Service Instance.
       responses:
         '204':
           description: No Content.
       tags:
         - apiservice
-      operationId: deleteAPIServiceDefinition
-      description: Delete an API Service Definition.
-  '/apiservices/{apiserviceId}/definitions/{definitionId}/publish':
+      operationId: deleteAPIServiceInstance
+      description: Delete an API Service Instance.
+  '/apiservices/{apiserviceId}/instances/{instanceId}/publish':
     parameters:
       - name: apiserviceId
         in: path
         required: true
         schema:
           type: string
-      - name: definitionId
+      - name: instanceId
         in: path
         required: true
         schema:
           type: string
     put:
-      summary: Publish an API Service Definition.
+      summary: Publish an API Service Instance.
       responses:
         '204':
           description: No Content
         '404':
           description: Not Found
-      description: Publish an API Service Definition.
-      operationId: publishAPIServiceDefinition
+      description: Publish an API Service Instance.
+      operationId: publishAPIServiceInstance
       tags:
         - apiservice
-        - apiservicedefinition
+        - apiserviceinstance
 components:
   schemas:
     AuditMetadata:
@@ -474,18 +474,18 @@ components:
           description: List of tags
           items:
             type: string
-        definitions:
+        instances:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/APIServiceDefinition'
-          description: The API Service definitions in this API Service.
+            $ref: '#/components/schemas/APIServiceInstance'
+          description: The API Service Instances in this API Service.
         environmentId:
           type: string
       required:
         - environmentId
-    APIServiceDefinition:
-      title: API Service Definition
-      description: The details of individual releases of an API Service.
+    APIServiceInstance:
+      title: API Service Instance
+      description: The details of individual instances of an API Service.
       type: object
       properties:
         id:
