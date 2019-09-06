@@ -439,8 +439,6 @@ components:
           type: string
         icon:
           type: string
-        flowVariables:
-          $ref: '#/components/schemas/EnvironmentDictionary'
         variables:
           $ref: '#/components/schemas/EnvironmentDictionary'
         tags:
