@@ -167,7 +167,7 @@ paths:
       summary: Delete an environment.
       responses:
         '204':
-          description: No Content.
+          description: No Content
       tags:
         - environment
       operationId: deleteEnvironment
@@ -268,7 +268,7 @@ paths:
       summary: Delete an API Service.
       responses:
         '204':
-          description: No Content.
+          description: No Content
       tags:
         - apiservice
       operationId: deleteAPIService
@@ -383,7 +383,7 @@ paths:
       summary: Delete an API Service Instance.
       responses:
         '204':
-          description: No Content.
+          description: No Content
       tags:
         - apiservice
       operationId: deleteAPIServiceInstance
