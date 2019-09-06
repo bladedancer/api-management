@@ -14,7 +14,7 @@ servers:
 paths:
   /environments:
     get:
-      summary: Get all environments.
+      summary: Get environments.
       responses:
         '200':
           description: OK
@@ -24,7 +24,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Environment'
-      description: Get all environments.
+      description: Get environments.
       operationId: getEnvironments
       tags:
         - environment
@@ -171,7 +171,7 @@ paths:
       description: Delete an environment.
   /apiservices:
     get:
-      summary: Get all API Services.
+      summary: Get API Services.
       tags:
         - apiservice
       responses:
@@ -190,7 +190,7 @@ paths:
         - $ref: '#/components/parameters/pageSizeParam'
         - $ref: '#/components/parameters/sortParam'
       operationId: getAPIServices
-      description: Get all API Services.
+      description: Get API Services.
     post:
       summary: Create an API Service.
       responses:
@@ -272,7 +272,7 @@ paths:
       description: Delete an API Service.
   '/apiservices/{apiserviceId}/instance':
     get:
-      summary: Get all API Service Instances.
+      summary: Get API Service Instances.
       responses:
         '200':
           description: OK
@@ -282,7 +282,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/APIServiceInstance'
-      description: Get all API Service Instances.
+      description: Get API Service Instances.
       operationId: getAPIServiceInstances
       tags:
         - apiservice
