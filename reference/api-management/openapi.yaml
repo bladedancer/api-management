@@ -440,12 +440,15 @@ components:
         icon:
           type: string
         variables:
-          $ref: '#/components/schemas/EnvironmentDictionary'
+          $ref: '#/components/schemas/EnvironmentVariables'
         tags:
           type: array
           description: List of tags
           items:
             type: string
+        owningTeamId:
+          type: string
+          description: The id of the owning team for this environment.
       required:
         - name
     APIService:
@@ -534,6 +537,21 @@ components:
             - type: object
             - type: string
       additionalProperties: true
+      x-examples:
+        swagger:
+          type: swagger
+          definition:
+            swagger: '2.0'
+            info:
+              description: Example swagger.
+              version: 1.0.0
+              title: Example
+            host: example.com
+            basePath: /v1
+            schemes:
+              - https
+              - http
+            paths: {}
     Endpoint:
       type: object
       description: An endpoint.
@@ -545,8 +563,12 @@ components:
       required:
         - host
         - port
-    EnvironmentDictionary:
-      title: EnvironmentDictionary
+      x-examples:
+        example:
+          host: localhost
+          port: '443'
+    EnvironmentVariables:
+      title: EnvironmentVariables
       description: Variables for use in environment substitutions.
       additionalProperties:
         oneOf:
