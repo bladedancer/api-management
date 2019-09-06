@@ -48,6 +48,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Environment'
+        '409':
+          description: Conflict
       tags:
         - environment
       operationId: createEnvironment
@@ -152,6 +154,8 @@ paths:
                 $ref: '#/components/schemas/Environment'
         '404':
           description: Not Found
+        '409':
+          description: Conflict
       description: Update an environment.
       operationId: updateEnvironment
       tags:
@@ -201,6 +205,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/APIService'
+        '409':
+          description: Conflict
       tags:
         - apiservice
       operationId: createAPIService
@@ -244,6 +250,8 @@ paths:
                 $ref: '#/components/schemas/APIService'
         '404':
           description: Not Found
+        '409':
+          description: Conflict
       description: Update an API Service.
       operationId: updateAPIService
       tags:
@@ -294,6 +302,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/APIServiceDefinition'
+        '409':
+          description: Conflict
       tags:
         - apiservice
         - apiservicedefinition
@@ -349,6 +359,8 @@ paths:
                 $ref: '#/components/schemas/APIServiceDefinition'
         '404':
           description: Not Found
+        '409':
+          description: Conflict
       description: Update an API Service Definition.
       operationId: updateAPIServiceDefinition
       tags:
