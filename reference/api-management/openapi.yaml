@@ -273,7 +273,7 @@ paths:
         - apiservice
       operationId: deleteAPIService
       description: Delete an API Service.
-  '/apiservices/{apiserviceId}/instance':
+  '/apiservices/{apiserviceId}/instances':
     get:
       summary: Get API Service Instances.
       responses:
@@ -333,7 +333,7 @@ paths:
         required: true
         schema:
           type: string
-  '/apiservices/{apiserviceId}/instance/{instanceId}':
+  '/apiservices/{apiserviceId}/instances/{instanceId}':
     parameters:
       - name: apiserviceId
         in: path
@@ -654,7 +654,7 @@ components:
         - type
         - defintion
   securitySchemes:
-    scheme_0:
+    token:
       type: http
       scheme: Bearer
       description: Authenticated platform bearer token.
