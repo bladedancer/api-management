@@ -159,6 +159,14 @@ paths:
           description: Not Found
         '409':
           description: Conflict
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Environment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Environment'
       description: Update an environment.
       operationId: updateEnvironment
       tags:
