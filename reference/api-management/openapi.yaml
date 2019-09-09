@@ -291,6 +291,123 @@ paths:
         - apiservice
       operationId: deleteAPIService
       description: Delete an API Service.
+  '/apiservices/{apiserviceId}/revisions':
+    get:
+      summary: Get API Service Revisions.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/APIServiceRevision'
+      description: Get API Service Revision.
+      operationId: getAPIServiceRevision
+      tags:
+        - apiservice
+        - apiservicerevision
+      parameters:
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/countParam'
+        - $ref: '#/components/parameters/pageNumberParam'
+        - $ref: '#/components/parameters/pageSizeParam'
+        - $ref: '#/components/parameters/sortParam'
+    post:
+      summary: Create an API Service Revision.
+      responses:
+        '201':
+          description: Created
+          headers:
+            location:
+              schema:
+                type: string
+              description: The location of the created API Service Revision.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIServiceRevision'
+        '409':
+          description: Conflict
+      tags:
+        - apiservice
+        - apiservicerevision
+      operationId: createAPIServiceRevision
+      requestBody:
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/APIServiceRevision'
+      description: Create an API Service Revision.
+    parameters:
+      - name: apiserviceId
+        in: path
+        required: true
+        schema:
+          type: string
+  '/apiservices/{apiserviceId}/revision/{revisionId}':
+    parameters:
+      - name: apiserviceId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: revisionId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get an API Service Revision.
+      tags:
+        - apiservice
+        - apiserviceRevision
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIServiceRevision'
+        '404':
+          description: Not Found
+      description: Get an API Service Revision.
+      operationId: getAPIServiceRevision
+    put:
+      summary: Update an API Service Revision.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIServiceRevision'
+        '404':
+          description: Not Found
+        '409':
+          description: Conflict
+      requestBody:
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/APIServiceRevision'
+      description: Update an API Service Revision.
+      operationId: updateAPIServiceRevision
+      tags:
+        - apiservice
+        - apiservicerevision
+    delete:
+      summary: Delete an API Service Revision.
+      responses:
+        '204':
+          description: No Content
+      tags:
+        - apiservice
+        - apiservicerevision
+      operationId: deleteAPIServiceRevision
+      description: Delete an API Service Revision.
+
   '/apiservices/{apiserviceId}/instances':
     get:
       summary: Get API Service Instances.
@@ -525,9 +642,35 @@ components:
           type: string
       required:
         - environmentId
+    APIServiceRevision:
+      title: API Service Revision
+      description: A revision of the API Service.
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        name:
+          type: string
+        tags:
+          type: array
+          description: List of tags
+          items:
+            type: string
+        metadata:
+          $ref: '#/components/schemas/AuditMetadata'
+        attributes:
+          $ref: '#/components/schemas/Attributes'
+        api:
+          oneOf:
+            - type: array
+              items:
+                $ref: '#/components/schemas/APIDefinition'
+            - $ref: '#/components/schemas/APIDefinition'
+        proxy: {}
     APIServiceInstance:
       title: API Service Instance
-      description: The details of individual instances of an API Service.
+      description: An instance an API Service Revision.
       type: object
       properties:
         id:
@@ -543,31 +686,14 @@ components:
         attributes:
           $ref: '#/components/schemas/Attributes'
         endpoint:
-          $ref: '#/components/schemas/APIEndpoint'
-        proxy: {}
-    APIEndpoint:
-      title: API Endpoint
-      description: A consumable API endpoint description.
-      type: object
-      properties:
-        api:
-          oneOf:
-            - type: array
-              items:
-                $ref: '#/components/schemas/APIDefinition'
-            - $ref: '#/components/schemas/APIDefinition'
-        selector:
-          type: object
-          properties:
-            type:
-              type: string
-            value: {}
-        endpoint:
           oneOf:
             - type: array
               items:
                 $ref: '#/components/schemas/Endpoint'
             - $ref: '#/components/schemas/Endpoint'
+        revisionId:
+          type: string
+        status: {}
     APIDefinition:
       title: API Definition
       description: An API definition.
@@ -603,6 +729,14 @@ components:
           type: string
         port:
           type: integer
+        protocol:
+          type: string
+        selector:
+          type: object
+          properties:
+            type:
+              type: string
+            value: {}
       required:
         - host
         - port
