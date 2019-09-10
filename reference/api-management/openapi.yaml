@@ -681,10 +681,15 @@ components:
           items:
             type: string
         instances:
-          type: object
-          additionalProperties:
+          type: array
+          items:
             $ref: '#/components/schemas/APIServiceInstance'
           description: The API Service Instances in this API Service.
+        revisions:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/APIServiceRevision'
+          description: The API Service Revisions in this API Service.
         environmentId:
           type: string
       required:
