@@ -15,15 +15,6 @@ paths:
   /environments:
     get:
       summary: Get environments.
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Environment'
       description: Get environments.
       operationId: getEnvironments
       tags:
@@ -34,8 +25,31 @@ paths:
         - $ref: '#/components/parameters/pageNumberParam'
         - $ref: '#/components/parameters/pageSizeParam'
         - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Environment'
+        '403':
+          description: Forbidden
     post:
       summary: Create an environment.
+      operationId: createEnvironment
+      description: Create an environment.
+      tags:
+        - environment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Environment'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Environment'
       responses:
         '201':
           description: Created
@@ -48,11 +62,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Environment'
+        '403':
+          description: Forbidden
         '409':
           description: Conflict
+  '/environments/{environmentId}':
+    parameters:
+      - name: environmentId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get an environment.
+      description: Get an environment.
+      operationId: getEnvironment
       tags:
         - environment
-      operationId: createEnvironment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Environment'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+    put:
+      summary: Update an environment.
+      description: Update an environment.
+      operationId: updateEnvironment
       requestBody:
         content:
           application/json:
@@ -61,27 +102,39 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/Environment'
-      description: Create an environment.
-  /graphql:
-    get:
-      summary: GraphQL query endpoint.
       tags:
-        - graphql
+        - environment
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  errors:
-                    type: array
-                    items:
-                      type: object
-                  data:
-                    type: object
+                $ref: '#/components/schemas/Environment'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '409':
+          description: Conflict
+    delete:
+      summary: Delete an environment.
+      description: Delete an environment.
+      operationId: deleteEnvironment
+      tags:
+        - environment
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+  /graphql:
+    get:
+      summary: GraphQL query endpoint.
       description: GraphQL query endpoint.
+      operationId: queryGraphqlInline
+      tags:
+        - graphql
       parameters:
         - schema:
             type: string
@@ -89,9 +142,6 @@ paths:
           name: query
           description: 'The GraphQL query. See https://graphql.org/learn/serving-over-http/#get-request.'
           required: true
-      operationId: queryGraphqlInline
-    post:
-      summary: GraphQL query endpoint.
       responses:
         '200':
           description: OK
@@ -100,13 +150,18 @@ paths:
               schema:
                 type: object
                 properties:
-                  data:
-                    type: object
                   errors:
                     type: array
                     items:
                       type: object
+                  data:
+                    type: object
+    post:
+      summary: GraphQL query endpoint.
       description: GraphQL query endpoint.
+      operationId: queryGraphql
+      tags:
+        - graphql
       requestBody:
         content:
           application/json:
@@ -120,71 +175,33 @@ paths:
                 variables:
                   type: object
         description: 'The GraphQL query. See https://graphql.org/learn/serving-over-http/#post-request.'
-      operationId: queryGraphql
-      tags:
-        - graphql
-  '/environments/{environmentId}':
-    parameters:
-      - name: environmentId
-        in: path
-        required: true
-        schema:
-          type: string
-    get:
-      summary: Get an environment.
-      tags:
-        - environment
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Environment'
-              examples: {}
-        '404':
-          description: Not Found
-      description: Get an environment.
-      operationId: getEnvironment
-    put:
-      summary: Update an environment.
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Environment'
-        '404':
-          description: Not Found
-        '409':
-          description: Conflict
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Environment'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Environment'
-      description: Update an environment.
-      operationId: updateEnvironment
-      tags:
-        - environment
-    delete:
-      summary: Delete an environment.
-      responses:
-        '204':
-          description: No Content
-      tags:
-        - environment
-      operationId: deleteEnvironment
-      description: Delete an environment.
+                type: object
+                properties:
+                  data:
+                    type: object
+                  errors:
+                    type: array
+                    items:
+                      type: object
   /apiservices:
     get:
       summary: Get API Services.
+      description: Get API Services.
+      operationId: getAPIServices
       tags:
         - apiservice
+      parameters:
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/countParam'
+        - $ref: '#/components/parameters/pageNumberParam'
+        - $ref: '#/components/parameters/pageSizeParam'
+        - $ref: '#/components/parameters/sortParam'
       responses:
         '200':
           description: OK
@@ -194,16 +211,22 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/APIService'
-      parameters:
-        - $ref: '#/components/parameters/offsetParam'
-        - $ref: '#/components/parameters/countParam'
-        - $ref: '#/components/parameters/pageNumberParam'
-        - $ref: '#/components/parameters/pageSizeParam'
-        - $ref: '#/components/parameters/sortParam'
-      operationId: getAPIServices
-      description: Get API Services.
     post:
       summary: Create an API Service.
+      description: Create an API Service.
+      operationId: createAPIService
+      tags:
+        - apiservice
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/APIService'
+                - $ref: '#/components/schemas/APIServiceDefinition'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/APIServiceDefinition'
       responses:
         '201':
           description: Created
@@ -216,22 +239,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/APIService'
+        '403':
+          description: Forbidden
         '409':
           description: Conflict
-      tags:
-        - apiservice
-      operationId: createAPIService
-      requestBody:
-        content:
-          application/json:
-            schema:
-              oneOf:
-                - $ref: '#/components/schemas/APIService'
-                - $ref: '#/components/schemas/APIServiceDefinition'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/APIServiceDefinition'
-      description: Create an API Service.
   '/apiservices/{apiserviceId}':
     parameters:
       - name: apiserviceId
@@ -241,6 +252,8 @@ paths:
           type: string
     get:
       summary: Get an API Service.
+      description: Get an API Service.
+      operationId: getAPIService
       tags:
         - apiservice
       responses:
@@ -251,12 +264,26 @@ paths:
               schema:
                 $ref: '#/components/schemas/APIService'
               examples: {}
+        '403':
+          description: Forbidden
         '404':
           description: Not Found
-      description: Get an API Service.
-      operationId: getAPIService
     put:
       summary: Update an API Service.
+      description: Update an API Service.
+      operationId: updateAPIService
+      tags:
+        - apiservice
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/APIService'
+                - $ref: '#/components/schemas/APIServiceDefinition'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/APIServiceDefinition'
       responses:
         '200':
           description: OK
@@ -268,43 +295,28 @@ paths:
           description: Not Found
         '409':
           description: Conflict
-      requestBody:
-        content:
-          application/json:
-            schema:
-              oneOf:
-                - $ref: '#/components/schemas/APIService'
-                - $ref: '#/components/schemas/APIServiceDefinition'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/APIServiceDefinition'
-      description: Update an API Service.
-      operationId: updateAPIService
-      tags:
-        - apiservice
     delete:
       summary: Delete an API Service.
+      description: Delete an API Service.
+      operationId: deleteAPIService
+      tags:
+        - apiservice
       responses:
         '204':
           description: No Content
-      tags:
-        - apiservice
-      operationId: deleteAPIService
-      description: Delete an API Service.
+        '403':
+          description: Forbidden
   '/apiservices/{apiserviceId}/revisions':
+    parameters:
+      - name: apiserviceId
+        in: path
+        required: true
+        schema:
+          type: string
     get:
       summary: Get API Service Revisions.
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/APIServiceRevision'
       description: Get API Service Revision.
-      operationId: getAPIServiceRevision
+      operationId: getAPIServiceRevisions
       tags:
         - apiservice
         - apiservicerevision
@@ -314,8 +326,34 @@ paths:
         - $ref: '#/components/parameters/pageNumberParam'
         - $ref: '#/components/parameters/pageSizeParam'
         - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/APIServiceRevision'
+        '403':
+          description: Forbidden
     post:
       summary: Create an API Service Revision.
+      description: Create an API Service Revision.
+      operationId: createAPIServiceRevision
+      tags:
+        - apiservice
+        - apiservicerevision
+      requestBody:
+        content:
+          application/json:
+            schema:
+                oneOf:
+                  - $ref: '#/components/schemas/APIServiceRevision'
+                  - $ref: '#/components/schemas/APIServiceDefinition'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/APIServiceDefinition'
       responses:
         '201':
           description: Created
@@ -328,25 +366,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/APIServiceRevision'
+        '403':
+          description: Forbidden
         '409':
           description: Conflict
-      tags:
-        - apiservice
-        - apiservicerevision
-      operationId: createAPIServiceRevision
-      requestBody:
-        content:
-          application/json:
-            schema:
-                $ref: '#/components/schemas/APIServiceRevision'
-      description: Create an API Service Revision.
-    parameters:
-      - name: apiserviceId
-        in: path
-        required: true
-        schema:
-          type: string
-  '/apiservices/{apiserviceId}/revision/{revisionId}':
+  '/apiservices/{apiserviceId}/revisions/{revisionId}':
     parameters:
       - name: apiserviceId
         in: path
@@ -360,6 +384,8 @@ paths:
           type: string
     get:
       summary: Get an API Service Revision.
+      description: Get an API Service Revision.
+      operationId: getAPIServiceRevision
       tags:
         - apiservice
         - apiserviceRevision
@@ -370,56 +396,61 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/APIServiceRevision'
+        '403':
+          description: Forbidden
         '404':
           description: Not Found
-      description: Get an API Service Revision.
-      operationId: getAPIServiceRevision
     put:
       summary: Update an API Service Revision.
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIServiceRevision'
-        '404':
-          description: Not Found
-        '409':
-          description: Conflict
-      requestBody:
-        content:
-          application/json:
-            schema:
-                $ref: '#/components/schemas/APIServiceRevision'
       description: Update an API Service Revision.
       operationId: updateAPIServiceRevision
       tags:
         - apiservice
         - apiservicerevision
-    delete:
-      summary: Delete an API Service Revision.
-      responses:
-        '204':
-          description: No Content
-      tags:
-        - apiservice
-        - apiservicerevision
-      operationId: deleteAPIServiceRevision
-      description: Delete an API Service Revision.
-
-  '/apiservices/{apiserviceId}/instances':
-    get:
-      summary: Get API Service Instances.
+      requestBody:
+        content:
+          application/json:
+            schema:
+                oneOf:
+                  - $ref: '#/components/schemas/APIServiceRevision'
+                  - $ref: '#/components/schemas/APIServiceDefinition'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/APIServiceDefinition'
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/APIServiceInstance'
+                $ref: '#/components/schemas/APIServiceRevision'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '409':
+          description: Conflict
+    delete:
+      summary: Delete an API Service Revision.
+      description: Delete an API Service Revision.
+      operationId: deleteAPIServiceRevision
+      tags:
+        - apiservice
+        - apiservicerevision
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+  '/apiservices/{apiserviceId}/instances':
+    parameters:
+      - name: apiserviceId
+        in: path
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get API Service Instances.
       description: Get API Service Instances.
       operationId: getAPIServiceInstances
       tags:
@@ -431,8 +462,34 @@ paths:
         - $ref: '#/components/parameters/pageNumberParam'
         - $ref: '#/components/parameters/pageSizeParam'
         - $ref: '#/components/parameters/sortParam'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/APIServiceInstance'
+        '403':
+          description: Forbidden
     post:
       summary: Create an API Service Instance.
+      description: Create an API Service Instance.
+      operationId: createAPIServiceInstance
+      tags:
+        - apiservice
+        - apiserviceinstance
+      requestBody:
+        content:
+          application/json:
+            schema:
+                oneOf:
+                  - $ref: '#/components/schemas/APIServiceInstance'
+                  - $ref: '#/components/schemas/APIServiceInstanceDefinition'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/APIServiceInstanceDefinition'
       responses:
         '201':
           description: Created
@@ -445,29 +502,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/APIServiceInstance'
+        '403':
+          description: Forbidden
         '409':
           description: Conflict
-      tags:
-        - apiservice
-        - apiserviceinstance
-      operationId: createAPIServiceInstance
-      requestBody:
-        content:
-          application/json:
-            schema:
-                oneOf:
-                  - $ref: '#/components/schemas/APIServiceInstance'
-                  - $ref: '#/components/schemas/APIServiceInstanceDefinition'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/APIServiceInstanceDefinition'
-      description: Create an API Service Instance.
-    parameters:
-      - name: apiserviceId
-        in: path
-        required: true
-        schema:
-          type: string
   '/apiservices/{apiserviceId}/instances/{instanceId}':
     parameters:
       - name: apiserviceId
@@ -482,6 +520,8 @@ paths:
           type: string
     get:
       summary: Get an API Service Instance.
+      description: Get an API Service Instance.
+      operationId: getAPIServiceInstance
       tags:
         - apiservice
         - apiserviceinstance
@@ -492,23 +532,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/APIServiceInstance'
+        '403':
+          description: Forbidden
         '404':
           description: Not Found
-      description: Get an API Service Instance.
-      operationId: getAPIServiceInstance
     put:
       summary: Update an API Service Instance.
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/APIServiceInstance'
-        '404':
-          description: Not Found
-        '409':
-          description: Conflict
+      description: Update an API Service Instance.
+      operationId: updateAPIServiceInstance
+      tags:
+        - apiservice
+        - apiserviceinstance
       requestBody:
         content:
           application/json:
@@ -519,20 +553,31 @@ paths:
           multipart/form-data:
             schema:
               $ref: '#/components/schemas/APIServiceInstanceDefinition'
-      description: Update an API Service Instance.
-      operationId: updateAPIServiceInstance
-      tags:
-        - apiservice
-        - apiserviceinstance
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/APIServiceInstance'
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '409':
+          description: Conflict
     delete:
       summary: Delete an API Service Instance.
+      description: Delete an API Service Instance.
+      operationId: deleteAPIServiceInstance
       responses:
         '204':
           description: No Content
+        '403':
+          description: Forbidden
       tags:
         - apiservice
-      operationId: deleteAPIServiceInstance
-      description: Delete an API Service Instance.
+        - apiserviceinstance
   '/apiservices/{apiserviceId}/instances/{instanceId}/publish':
     parameters:
       - name: apiserviceId
@@ -547,16 +592,18 @@ paths:
           type: string
     put:
       summary: Publish an API Service Instance.
-      responses:
-        '204':
-          description: No Content
-        '404':
-          description: Not Found
       description: Publish an API Service Instance.
       operationId: publishAPIServiceInstance
       tags:
         - apiservice
         - apiserviceinstance
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
 components:
   schemas:
     AuditMetadata:
@@ -747,6 +794,7 @@ components:
     EnvironmentVariables:
       title: EnvironmentVariables
       description: Variables for use in environment substitutions.
+      type: object
       additionalProperties:
         oneOf:
           - type: string
