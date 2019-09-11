@@ -34,8 +34,14 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Environment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          description: Forbidden
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
     post:
       summary: Create an environment.
       operationId: createEnvironment
@@ -62,10 +68,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Environment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          description: Forbidden
+          $ref: '#/components/responses/Forbidden'
         '409':
-          description: Conflict
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   '/environments/{environmentId}':
     parameters:
       - name: environmentId
@@ -86,10 +98,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Environment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          description: Forbidden
+          $ref: '#/components/responses/Forbidden'
         '404':
-          description: Not Found
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
     put:
       summary: Update an environment.
       description: Update an environment.
@@ -111,12 +129,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Environment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          description: Forbidden
+          $ref: '#/components/responses/Forbidden'
         '404':
-          description: Not Found
+          $ref: '#/components/responses/NotFound'
         '409':
-          description: Conflict
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
     delete:
       summary: Delete an environment.
       description: Delete an environment.
@@ -126,8 +150,14 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          description: Forbidden
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   /graphql:
     get:
       summary: GraphQL query endpoint.
@@ -156,6 +186,16 @@ paths:
                       type: object
                   data:
                     type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
     post:
       summary: GraphQL query endpoint.
       description: GraphQL query endpoint.
@@ -189,6 +229,16 @@ paths:
                     type: array
                     items:
                       type: object
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   /apiservices:
     get:
       summary: Get API Services.
@@ -211,6 +261,14 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/APIService'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
     post:
       summary: Create an API Service.
       description: Create an API Service.
@@ -239,10 +297,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/APIService'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          description: Forbidden
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
         '409':
-          description: Conflict
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   '/apiservices/{apiserviceId}':
     parameters:
       - name: apiserviceId
@@ -263,11 +329,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/APIService'
-              examples: {}
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          description: Forbidden
+          $ref: '#/components/responses/Forbidden'
         '404':
-          description: Not Found
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
     put:
       summary: Update an API Service.
       description: Update an API Service.
@@ -291,10 +362,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/APIService'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
         '404':
-          description: Not Found
+          $ref: '#/components/responses/NotFound'
         '409':
-          description: Conflict
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
     delete:
       summary: Delete an API Service.
       description: Delete an API Service.
@@ -304,8 +383,15 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          description: Forbidden
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
   '/apiservices/{apiserviceId}/revisions':
     parameters:
       - name: apiserviceId
@@ -335,8 +421,16 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/APIServiceRevision'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          description: Forbidden
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
     post:
       summary: Create an API Service Revision.
       description: Create an API Service Revision.
@@ -366,10 +460,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/APIServiceRevision'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          description: Forbidden
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
         '409':
-          description: Conflict
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
   '/apiservices/{apiserviceId}/revisions/{revisionId}':
     parameters:
       - name: apiserviceId
@@ -396,10 +499,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/APIServiceRevision'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          description: Forbidden
+          $ref: '#/components/responses/Forbidden'
         '404':
-          description: Not Found
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
     put:
       summary: Update an API Service Revision.
       description: Update an API Service Revision.
@@ -424,12 +534,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/APIServiceRevision'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          description: Forbidden
+          $ref: '#/components/responses/Forbidden'
         '404':
-          description: Not Found
+          $ref: '#/components/responses/NotFound'
         '409':
-          description: Conflict
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
     delete:
       summary: Delete an API Service Revision.
       description: Delete an API Service Revision.
@@ -440,8 +557,15 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          description: Forbidden
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
   '/apiservices/{apiserviceId}/instances':
     parameters:
       - name: apiserviceId
@@ -471,8 +595,19 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/APIServiceInstance'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          description: Forbidden
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
     post:
       summary: Create an API Service Instance.
       description: Create an API Service Instance.
@@ -502,10 +637,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/APIServiceInstance'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          description: Forbidden
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
         '409':
-          description: Conflict
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
   '/apiservices/{apiserviceId}/instances/{instanceId}':
     parameters:
       - name: apiserviceId
@@ -532,10 +676,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/APIServiceInstance'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          description: Forbidden
+          $ref: '#/components/responses/Forbidden'
         '404':
-          description: Not Found
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
     put:
       summary: Update an API Service Instance.
       description: Update an API Service Instance.
@@ -560,24 +711,38 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/APIServiceInstance'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          description: Forbidden
+          $ref: '#/components/responses/Forbidden'
         '404':
-          description: Not Found
+          $ref: '#/components/responses/NotFound'
         '409':
-          description: Conflict
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
     delete:
       summary: Delete an API Service Instance.
       description: Delete an API Service Instance.
       operationId: deleteAPIServiceInstance
-      responses:
-        '204':
-          description: No Content
-        '403':
-          description: Forbidden
       tags:
         - apiservice
         - apiserviceinstance
+      responses:
+        '204':
+          description: No Content
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
   '/apiservices/{apiserviceId}/instances/{instanceId}/publish':
     parameters:
       - name: apiserviceId
@@ -600,12 +765,82 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          description: Forbidden
+          $ref: '#/components/responses/Forbidden'
         '404':
-          description: Not Found
+          $ref: '#/components/responses/NotFound'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
 components:
+  responses:
+    BadRequest:
+      description: Failed to validate request parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized. A valid authorization header was not provided with the request to authenticate.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Forbidden:
+      description: Forbidden, the user does not have the correct permissions to call this API.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: The resource specified could not be found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Conflict:
+      description: Request conflicts with the current state of the server.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Unexpected internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
+    ErrorResponse:
+      title: Error Response
+      description: Detail for standard error responses.
+      type: object
+      additionalProperties: true
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+            properties:
+              status:
+                type: integer
+              title:
+                type: string
+              detail:
+                type: string
+              meta:
+                type: object
+                additionalProperties: true
+                properties:
+                  instanceId:
+                    type: string
     AuditMetadata:
       title: AuditMetadata
       description: Read-only metadata for the record.
